@@ -38,3 +38,14 @@ func Initialize()(){
   }
 }
 
+func CreateBragDoc(docName string){
+  if _, err := os.Stat(docName); os.IsNotExist(err) {
+    docFile, err := os.Create(docName)
+    if err!=nil{
+      fmt.Println("Failed to create: ", docName)
+      return
+    }
+    defer docFile.Close()
+    fmt.Println("Created: ", docName)
+  }
+}
