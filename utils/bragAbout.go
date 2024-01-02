@@ -64,11 +64,12 @@ func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.T
         fmt.Printf("Failed to open file: %s\n", currentDocName)
         return
       }
-      documentContentStr := strings.Replace(string(documentContent), 
-                                  "# Bragging Items", "", -1)
-      documentContentStr = strings.Replace(documentContentStr, 
-                                  "\n", "", 1)
-      fmt.Printf("%s\n%s\n", currentDateStr, documentContentStr)
+      //documentContentStr := strings.Replace(string(documentContent), 
+      //                            "# Bragging Items", "", -1)
+      //documentContentStr = strings.Replace(documentContentStr, 
+      //                            "\n", "", 1)
+      fmt.Println(currentDateStr)
+      fmt.Printf("%s\n", string(documentContent))
     }
     curDoc = curDoc.AddDate(0, 0, 1)
   }

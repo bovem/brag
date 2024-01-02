@@ -54,11 +54,11 @@ func CreateBragDoc(docName string){
     
     defer docFile.Close()
 
-    bragItemsHeading := fmt.Sprintf("# Bragging Items\n")
-    
-    if _, err = docFile.WriteString(bragItemsHeading); err != nil {
-        fmt.Println("Failed to add \"Bragging Items\" heading")
-    }
+    //bragItemsHeading := fmt.Sprintf("# Bragging Items\n")
+    //
+    //if _, err = docFile.WriteString(bragItemsHeading); err != nil {
+    //    fmt.Println("Failed to add \"Bragging Items\" heading")
+    //}
 
     fmt.Println("Created: ", docName)
   }
