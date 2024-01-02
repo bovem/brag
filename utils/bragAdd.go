@@ -35,6 +35,7 @@ func AddBrag(bragContent string)(){
                               0600)
   if err != nil {
     fmt.Println("Failed to open file:", bragDoc)
+    return
   }
   
   defer bragDoc.Close()
@@ -45,5 +46,6 @@ func AddBrag(bragContent string)(){
   
   if _, err = bragDoc.WriteString(bragContent); err != nil {
       fmt.Println("Failed to add brag to brag doc")
+      return
   }
 }

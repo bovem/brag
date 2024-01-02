@@ -45,7 +45,21 @@ func CreateBragDoc(docName string){
       fmt.Println("Failed to create: ", docName)
       return
     }
+    docFile, err = os.OpenFile(docName, 
+                                os.O_APPEND|os.O_WRONLY|os.O_CREATE, 
+                                0600)
+    if err != nil {
+      fmt.Println("Failed to open file:", docFile)
+    }
+    
     defer docFile.Close()
+
+    bragItemsHeading := fmt.Sprintf("# Bragging Items\n")
+    
+    if _, err = docFile.WriteString(bragItemsHeading); err != nil {
+        fmt.Println("Failed to add \"Bragging Items\" heading")
+    }
+
     fmt.Println("Created: ", docName)
   }
 }

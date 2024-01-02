@@ -7,6 +7,7 @@ package cmd
 import (
   "github.com/bovem/brag/utils"
 	"github.com/spf13/cobra"
+  "strings"
 )
 
 var timeFrame string
@@ -22,14 +23,14 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		utils.Bragging(timeFrame)
+		utils.Bragging(strings.Join(args, " "))
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(aboutCmd)
 
-	aboutCmd.PersistentFlags().StringVarP(&timeFrame, "timeframe", "t", "", "Time Frame for Bragging")
+	aboutCmd.PersistentFlags().StringVarP(&timeFrame, "timeframe", "t", "today", "Time Frame for Bragging")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

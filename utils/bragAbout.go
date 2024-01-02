@@ -28,35 +28,47 @@ func Bragging(timeFrame string)(){
     numTime, _ = strconv.Atoi(timeFrequencies[0])
   }
 
+  var numYear, numMonth, numDay int
   if(len(timeFrequencies)==2){
     switch timeFrequencies[1] {
     case "week", "weeks":
-      numTime = 7*24*numTime
+      numDay = numTime*7
     case "day", "days":
-      numTime = 24*numTime
+      numDay = numTime
     case "month", "months":
-      numTime = 30*24*numTime
+      numMonth = numTime
+    case "year", "years":
+      numYear = numTime
     }
   }
 
-  startBraggingFrom := currentTime.Add(-time.Hour*time.Duration(numTime))
+  startBraggingFrom := currentTime.AddDate(-numYear, -numMonth, -numDay)
   LoopOverFileRange(currentYearDir, startBraggingFrom, currentTime)
 }
 
 func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.Time)(){
-  tomorrow := endTime.Add(24*time.Hour)
+  tomorrow := endTime.AddDate(0, 0, 1)
   curDoc:=startTime
-  for (curDoc!=tomorrow){
+
+  for (true){
+    if (curDoc==tomorrow){
+      break
+    }
+
     currentDateStr := ConvertDateToStr(curDoc)
     currentDocName := filepath.Join(fileDirectory, currentDateStr+".md")
+
     if _, err := os.Stat(currentDocName); err==nil {
-      fmt.Println(currentDateStr) 
+      fmt.Print(currentDateStr) 
       documentContent, err := ioutil.ReadFile(currentDocName)
       if err!=nil {
-        fmt.Println(err)
+        fmt.Printf("Failed to open file: %s\n", currentDocName)
+        return
       }
-      fmt.Println(string(documentContent))
+      documentContentStr := strings.Replace(string(documentContent), 
+                                  "# Bragging Items", "", -1)
+      fmt.Printf("%s\n", documentContentStr)
     }
-    curDoc = curDoc.Add(24*time.Hour)
+    curDoc = curDoc.AddDate(0, 0, 1)
   }
 }
