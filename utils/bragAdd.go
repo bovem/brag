@@ -6,6 +6,7 @@ import (
   "strconv"
   "time"
   "os"
+  "os/exec"
 )
 
 func ConvertDateToStr(currentDate time.Time)(string){
@@ -47,5 +48,28 @@ func AddBrag(bragContent string)(){
   if _, err = bragDoc.WriteString(bragContent); err != nil {
       fmt.Println("Failed to add brag to brag doc")
       return
+  }
+
+
+  if(os.Getenv("BRAG_DOCS_REPO_SYNC")=="true"){
+    cmd := exec.Command("git", "add", "--all")
+    cmd.Dir = os.Getenv("BRAG_DOCS_LOC")
+    _, err = cmd.Output()
+    if err != nil {
+        fmt.Println(err.Error())
+    }
+    cmd = exec.Command("git", "commit", "-m",
+                        fmt.Sprintf("\"Updated at %s\"", currentTime))
+    cmd.Dir = os.Getenv("BRAG_DOCS_LOC")
+    _, err = cmd.Output()
+    if err != nil {
+        fmt.Println(err.Error())
+    }
+    cmd = exec.Command("git", "push", "origin", "main")
+    cmd.Dir = os.Getenv("BRAG_DOCS_LOC")
+    _, err = cmd.Output()
+    if err != nil {
+        fmt.Println(err.Error())
+    }
   }
 }

@@ -59,7 +59,6 @@ func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.T
     currentDocName := filepath.Join(fileDirectory, currentDateStr+".md")
 
     if _, err := os.Stat(currentDocName); err==nil {
-      fmt.Print(currentDateStr) 
       documentContent, err := ioutil.ReadFile(currentDocName)
       if err!=nil {
         fmt.Printf("Failed to open file: %s\n", currentDocName)
@@ -67,7 +66,9 @@ func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.T
       }
       documentContentStr := strings.Replace(string(documentContent), 
                                   "# Bragging Items", "", -1)
-      fmt.Printf("%s\n", documentContentStr)
+      documentContentStr = strings.Replace(documentContentStr, 
+                                  "\n", "", 1)
+      fmt.Printf("%s\n%s\n", currentDateStr, documentContentStr)
     }
     curDoc = curDoc.AddDate(0, 0, 1)
   }
