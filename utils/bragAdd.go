@@ -8,12 +8,23 @@ import (
   "os"
 )
 
+func ConvertDateToStr(currentDate time.Time)(string){
+  currentDateStr := fmt.Sprintf("%04d-%02d-%02d", currentDate.Year(), 
+                                              int(currentDate.Month()),
+                                              currentDate.Day())
+  return currentDateStr
+}
+
+func ConvertTimeToStr(currentTime time.Time)(string){
+  currentTimeStr := fmt.Sprintf("%02d:%02d:%02d", currentTime.Hour(), 
+                                              int(currentTime.Minute()),
+                                              currentTime.Second())
+  return currentTimeStr
+}
+
 func AddBrag(bragContent string)(){
   currentTime := time.Now()
-  currentTimeStr := currentTime.Format(time.RFC3339)
-  todayFileName := fmt.Sprintf("%d-%02d-%02d.md", currentTime.Year(), 
-                                              int(currentTime.Month()),
-                                              currentTime.Day())
+  todayFileName := ConvertDateToStr(currentTime) + ".md"
   todayFilePath := filepath.Join(os.Getenv("BRAG_DOCS_LOC"), 
                                  strconv.Itoa(currentTime.Year()), 
                                  todayFileName)
@@ -28,7 +39,9 @@ func AddBrag(bragContent string)(){
   
   defer bragDoc.Close()
 
-  bragContent = fmt.Sprintf("%s\t%s\n", currentTimeStr, bragContent)
+  bragContent = fmt.Sprintf("* %s\t%s\n", 
+                            ConvertTimeToStr(currentTime), 
+                            bragContent)
   
   if _, err = bragDoc.WriteString(bragContent); err != nil {
       fmt.Println("Failed to add brag to brag doc")
