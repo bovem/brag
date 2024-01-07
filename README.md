@@ -14,6 +14,11 @@ but I decided to create a command line tool because:
 * I edit and maintain the document using applications like VSCode, VIM, and Obsidian.
 * I can use Git for Version Control. 
 
+## Download
+```bash
+curl -L https://github.com/bovem/brag/releases/download/v0.1/brag-linux-amd64 > /usr/local/bin/brag
+```
+
 ## Setup and Usage
 To initialize a bragging document directory create a Git repository on any provider
 like GitHub, GitLab, BitBucket, etc., and clone the repository locally. You can also
