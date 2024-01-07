@@ -1,7 +1,3 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
@@ -12,16 +8,18 @@ import (
 
 var timeFrame string
 
-// aboutCmd represents the about command
 var aboutCmd = &cobra.Command{
 	Use:   "about",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Describes the brags from the specified time period.",
+	Long: `Presents brags from the specified time period with date and time. For Example:
+brag about today
+brag about last-week
+brag about 2-months
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+The time period has to be specified in any of the following formats
+* <numeric-time>-<range-of-days> (brag about 2-months/brag about 3-years)
+* today/yesterday/last-week/last-month (brag about last-week/brag about yesterday)
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.Bragging(strings.Join(args, " "))
 	},
@@ -29,15 +27,5 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(aboutCmd)
-
 	aboutCmd.PersistentFlags().StringVarP(&timeFrame, "timeframe", "t", "today", "Time Frame for Bragging")
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// aboutCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// aboutCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

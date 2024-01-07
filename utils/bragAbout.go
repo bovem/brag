@@ -19,16 +19,22 @@ func Bragging(timeFrame string)(){
   
   timeFrequencies := strings.Split(timeFrame, "-")
 
-  numTime := 1
-  if (timeFrequencies[0]=="last"){
+  var numTime int
+  var err error
+  var numYear, numMonth, numDay int
+
+  if (timeFrequencies[0]=="last" || timeFrequencies[0]=="yesterday"){
     numTime = 1
+    numDay = 1
   } else if (timeFrequencies[0]=="today"){
     numTime = 0
   } else {
-    numTime, _ = strconv.Atoi(timeFrequencies[0])
+    if numTime, err = strconv.Atoi(timeFrequencies[0]); err != nil {
+      fmt.Printf("Invalid time period. Use either \n* today/yesterday/last-week/last-month/last-year or \n* 2-days/11-days/3-months/1-year\n")
+      os.Exit(0)
+    }
   }
 
-  var numYear, numMonth, numDay int
   if(len(timeFrequencies)==2){
     switch timeFrequencies[1] {
     case "week", "weeks":
@@ -42,8 +48,15 @@ func Bragging(timeFrame string)(){
     }
   }
 
+  var endBraggingAt time.Time
+  if (timeFrequencies[0]=="yesterday"){
+    endBraggingAt = currentTime.AddDate(0, 0, -1)
+  } else {
+    endBraggingAt = currentTime
+  }
+
   startBraggingFrom := currentTime.AddDate(-numYear, -numMonth, -numDay)
-  LoopOverFileRange(currentYearDir, startBraggingFrom, currentTime)
+  LoopOverFileRange(currentYearDir, startBraggingFrom, endBraggingAt)
 }
 
 func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.Time)(){

@@ -1,7 +1,3 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
@@ -12,25 +8,29 @@ import (
 
 var bragComment string
 
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "brag",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "A command line tool to journal and build a bragging document.",
+	Long: `A bragging or hype document is created to keep a record of achievements over time.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
+Inspired from Julia Evan's blog "Get your work recognized: write a brag document" 
+(https://jvns.ca/blog/brag-documents/) this tool could be used to keep a record 
+of your brags in Markdown Format that could be referred later to create a formatted 
+bragging document.
+
+You can add your brags using command
+brag -c "YOUR TEXT HERE"
+
+If BRAG_DOCS_REPO_SYNC environment variable is set to true then changes to bragging document
+will be pushed to Git remote.
+
+and review them later using subcommand "about"
+brag about last-week`,
 	Run: func(cmd *cobra.Command, args []string) { 
     utils.AddBrag(bragComment)
   },
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -39,15 +39,5 @@ func Execute() {
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
 	rootCmd.PersistentFlags().StringVarP(&bragComment, "comment", "c", "", "Bragging Comment")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	//rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-
