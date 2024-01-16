@@ -60,7 +60,6 @@ func Summarize(timeFrame string, model string, prompt string) () {
 		return
 	}
 
-	// Read the response body
 	body, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error reading response body")
