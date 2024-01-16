@@ -10,7 +10,7 @@ import (
   "io/ioutil"
 )
 
-func Bragging(timeFrame string)(){
+func Bragging(timeFrame string)(string){
   bragDocDirLocation := os.Getenv("BRAG_DOCS_LOC")
   currentTime := time.Now()
   currentYear := strconv.Itoa(currentTime.Year())
@@ -56,10 +56,12 @@ func Bragging(timeFrame string)(){
   }
 
   startBraggingFrom := currentTime.AddDate(-numYear, -numMonth, -numDay)
-  LoopOverFileRange(currentYearDir, startBraggingFrom, endBraggingAt)
+  fileContents := LoopOverFileRange(currentYearDir, startBraggingFrom, endBraggingAt)
+  return fileContents
 }
 
-func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.Time)(){
+func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.Time)(string){
+  var fileContents string
   tomorrow := endTime.AddDate(0, 0, 1)
   curDoc:=startTime
 
@@ -75,15 +77,17 @@ func LoopOverFileRange(fileDirectory string, startTime time.Time, endTime time.T
       documentContent, err := ioutil.ReadFile(currentDocName)
       if err!=nil {
         fmt.Printf("Failed to open file: %s\n", currentDocName)
-        return
+        continue
       }
       //documentContentStr := strings.Replace(string(documentContent), 
       //                            "# Bragging Items", "", -1)
       //documentContentStr = strings.Replace(documentContentStr, 
       //                            "\n", "", 1)
-      fmt.Println(currentDateStr)
-      fmt.Printf("%s\n", string(documentContent))
+      fileContents += fmt.Sprintf("%s\n", currentDateStr)
+      fileContents += fmt.Sprintf("%s\n", string(documentContent))
     }
     curDoc = curDoc.AddDate(0, 0, 1)
   }
+
+  return fileContents
 }

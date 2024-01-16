@@ -4,6 +4,7 @@ import (
   "github.com/bovem/brag/utils"
 	"github.com/spf13/cobra"
   "strings"
+  "fmt"
 )
 
 var timeFrame string
@@ -21,7 +22,8 @@ The time period has to be specified in any of the following formats
 * today/yesterday/last-week/last-month (brag about last-week/brag about yesterday)
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		utils.Bragging(strings.Join(args, " "))
+    brags := utils.Bragging(strings.Join(args, " "))
+    fmt.Println(brags)
 	},
 }
 
