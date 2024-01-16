@@ -24,8 +24,12 @@ brag -c "YOUR TEXT HERE"
 If BRAG_DOCS_REPO_SYNC environment variable is set to true then changes to bragging document
 will be pushed to Git remote.
 
-and review them later using subcommand "about"
-brag about last-week`,
+Review your brags using the subcommand "about".
+brag about last-week
+
+To create a summarized bragging document using the help of Ollama (https://ollama.ai/) use 
+subcommand "summarize".
+brag summarize last-month`,
 	Run: func(cmd *cobra.Command, args []string) { 
     utils.AddBrag(bragComment)
   },
