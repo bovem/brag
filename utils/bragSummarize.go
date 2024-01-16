@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"bytes"
 	"encoding/json"
+  "os"
 )
 
 type ModelResponse struct {

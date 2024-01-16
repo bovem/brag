@@ -1,7 +1,7 @@
 package utils
 
 var BragDocTemplate = `Draft a bragging document from my perspective
-using the journal data provided below.
+using only the journal data provided below.
 
 The document should be written in a formal tone as it has to be shared
 with my manager and stakeholders and it impacts my personal growth.
@@ -54,4 +54,5 @@ the work. Also, write about
 * Recognition from any other part of the industry. Like awards.
 
 Additional information about personal projects and blogs will be mentioned after the journal.
+Do not add additional information which is not present in the journal.
 `
