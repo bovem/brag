@@ -83,6 +83,11 @@ Before generating the document the summarize command will ask for the names of y
 and work project, name of your blog and other content creation channels to differentiate 
 your work and personal updates in the summarized document.
 
+By default it will use the prompt in [bragDocument.go](./utils/bragDocument.go) but you can
+pass your own prompt using the `--prompt` flag. 
+
+To select a different model than `llama2:latest` use flag `--model`.
+
 #### Sample Output
 ```text
 Enter the name of your work projects:
